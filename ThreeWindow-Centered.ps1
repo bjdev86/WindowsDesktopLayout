@@ -13,6 +13,9 @@ public class WindowManipulation
 }
 "@
 
+# Import required binaries 
+Add-Type -AssemblyName System.Windows.Forms; 
+
 # Constants
 New-Variable -Name SCRNWIDTH -Value ([System.Windows.Forms.Screen]::PrimaryScreen.Bounds.Width) -Option Constant
 New-Variable -Name SCRNHEIGHT -Value ([System.Windows.Forms.SystemInformation]::WorkingArea.Height) -Option Constant
