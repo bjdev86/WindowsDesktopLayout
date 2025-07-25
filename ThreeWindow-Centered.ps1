@@ -45,7 +45,6 @@ function Start-And-Position
     
     # For windows/processes with the same name filter off the first hanldle. It's the one tied to the process.
     $hWnd = $hWnd -is [System.Array] ? $hWnd[0] : $hWnd;  
-    if ($hWnd -is [System.Array]) { Write-Host "Is Array: $hWnd" } else { Write-Host "Is Not Array: $hWnd" } 
     
     if ($hWnd -ne [IntPtr]::Zero) 
     {
@@ -60,7 +59,7 @@ function Start-And-Position
 }
 
 function Start-Center ([string]$processPath) 
-{
+{ 
     # Calculate the window size
     [int]$windowWidth = $SCRNWIDTH / 2; 
     [int]$windowHeight = $SCRNHEIGHT;
