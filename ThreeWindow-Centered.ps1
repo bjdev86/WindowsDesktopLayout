@@ -32,7 +32,7 @@ function Start-And-Position
     )
 
     # Start the application process
-    $process = Start-Process -FilePath $processPath -PassThru;
+    Start-Process -FilePath $processPath -ErrorAction SilentlyContinue;
     
     # Wait for the process to start and the window to appear
     Start-Sleep -Seconds 1; 
@@ -42,6 +42,7 @@ function Start-And-Position
 
     # Find the window handle
     $hWnd = Get-Process -Name $proName | Select-Object -ExpandProperty MainWindowHandle;
+    #TODO: Inspect and try to see if this pipeline can work better: $AppProcess = Get-Process -Name $ProcessName -ErrorAction SilentlyContinue | Where-Object { $_.MainWindowHandle -ne [System.IntPtr]::Zero } | Select-Object -First 1
     
     # For windows/processes with the same name filter off the first hanldle. It's the one tied to the process.
     $hWnd = $hWnd -is [System.Array] ? $hWnd[0] : $hWnd;  
@@ -53,7 +54,9 @@ function Start-And-Position
     } 
     else 
     {
-        #TODO: Wrap in try/catch and attempt to retry.
+        <#TODO: Wrap in try/catch and attempt to retry. To do this consider breaking the "Start" and "Position" functions up, so 
+        that they can be called separately. This way a recursive loop can be used to rety the process of starting the 
+        applicaiotn. Don't forget a counter :). #>
         Write-Host "Window not found: $procName"
     }
 }
